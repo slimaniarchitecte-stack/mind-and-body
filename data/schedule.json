@@ -1,0 +1,229 @@
+{
+  "_help": [
+    "Each block is one line of the template week.",
+    "days: 1 = Monday ... 7 = Sunday. daysFrom: take the days from Settings (work, muayThai, football).",
+    "start / end: a clock time like 18:15, or an anchor from Settings like @wake+15 or @sleep-60.",
+    "Anchors: @wake, @sleep, @work.start, @work.end, @leave, @home, @muayThai.start, @muayThai.end, @football.start, @football.end, @iftar, @suhoor.",
+    "duration is in minutes (use it instead of end). track: can be marked done. counts: false keeps it out of adherence.",
+    "stage: the unlock stage (see program.json). phases: only shown in these phases. when: normal or ramadan.",
+    "min: the minimum version for a bad day. Doing it counts as kept."
+  ],
+
+  "blocks": [
+    {
+      "id": "wake", "title": "Wake up", "note": "Water, daylight, no phone for 20 min.",
+      "category": "mind", "days": [1, 2, 3, 4, 5, 6, 7], "start": "@wake", "duration": 15,
+      "track": true, "stage": "s1", "min": "Up within 30 minutes of the target."
+    },
+    {
+      "id": "breakfast", "title": "Breakfast", "note": "Eggs or oats, plus a fruit.",
+      "category": "food", "days": [1, 2, 3, 4, 5, 6, 7], "start": "@wake+15", "duration": 20,
+      "track": true, "stage": "s1", "when": "normal", "min": "Anything with protein: milk or yogurt and a fruit."
+    },
+    {
+      "id": "commute-am", "title": "Commute", "category": "work", "daysFrom": "work",
+      "start": "@leave", "end": "@work.start", "track": false
+    },
+    {
+      "id": "work", "title": "Work", "note": "Water bottle on the desk. Stand up 2 min every hour.",
+      "category": "work", "daysFrom": "work", "start": "@work.start", "end": "@work.end", "track": false
+    },
+    {
+      "id": "lunchbox", "title": "Lunchbox", "note": "Big protein portion, carbs, vegetables.",
+      "category": "food", "daysFrom": "work", "start": "13:00", "duration": 30,
+      "track": true, "stage": "s1", "when": "normal", "min": "A lunch with protein, even bought."
+    },
+    {
+      "id": "tutorial", "title": "Lunch tutorial", "note": "20 min of theory for the current track.",
+      "category": "learn", "days": [2, 4], "start": "13:30", "duration": 20,
+      "track": true, "stage": "s3", "phases": ["p1", "p2", "p4"], "min": "5 minutes of the tutorial.", "link": "learn"
+    },
+    {
+      "id": "commute-pm", "title": "Commute", "category": "work", "daysFrom": "work",
+      "start": "@work.end", "end": "@home", "track": false
+    },
+    {
+      "id": "snack", "title": "Snack", "note": "Protein and a fruit.",
+      "category": "food", "days": [1, 3, 5], "start": "@home", "duration": 15, "track": false, "when": "normal"
+    },
+    {
+      "id": "snack-pre", "title": "Pre training snack", "note": "Nothing heavy before Muay Thai.",
+      "category": "food", "daysFrom": "muayThai", "start": "@muayThai.start-75", "duration": 15, "track": false, "when": "normal"
+    },
+    {
+      "id": "strength-a", "title": "Strength A", "note": "Bodyweight, at home.",
+      "category": "body", "days": [1], "start": "18:15", "duration": 25,
+      "track": true, "stage": "s2", "min": "10 push ups + 10 squats.", "link": "body/strength/a"
+    },
+    {
+      "id": "run", "title": "Easy run", "note": "Conversation pace.",
+      "category": "body", "days": [3], "start": "18:15", "duration": 30,
+      "track": true, "stage": "s5", "min": "10 minutes, easy jog or brisk walk.", "link": "body/log/run"
+    },
+    {
+      "id": "strength-b", "title": "Strength B", "note": "Bodyweight, at home.",
+      "category": "body", "days": [5], "start": "18:15", "duration": 25,
+      "track": true, "stage": "s2", "min": "10 push ups + 10 squats.", "link": "body/strength/b"
+    },
+    {
+      "id": "muaythai", "title": "Muay Thai", "note": "Non negotiable.",
+      "category": "body", "daysFrom": "muayThai", "start": "@muayThai.start", "end": "@muayThai.end",
+      "track": true, "stage": "s1", "min": "Show up. Warm up and technique only.", "link": "body/log/muaythai"
+    },
+    {
+      "id": "mobility", "title": "Mobility", "note": "Hips, hamstrings, upper back.",
+      "category": "body", "daysFrom": "muayThai", "start": "@muayThai.end", "duration": 10,
+      "track": true, "stage": "s2", "min": "2 minutes: hips and hamstrings."
+    },
+    {
+      "id": "dinner-mt", "title": "Big dinner", "note": "Protein and carbs after training.",
+      "category": "food", "daysFrom": "muayThai", "start": "@muayThai.end+45", "duration": 30, "track": false, "when": "normal"
+    },
+    {
+      "id": "dinner", "title": "Dinner with family", "note": "Generous protein and carbs.",
+      "category": "food", "days": [1, 3, 5, 7], "start": "19:45", "duration": 30, "track": false, "when": "normal"
+    },
+    {
+      "id": "suhoor", "title": "Suhoor", "note": "Water, dates and a real protein portion.",
+      "category": "food", "days": [1, 2, 3, 4, 5, 6, 7], "start": "@suhoor", "duration": 30,
+      "track": true, "stage": "s1", "when": "ramadan", "min": "Water and something with protein."
+    },
+    {
+      "id": "iftar", "title": "Iftar", "note": "Water first, then protein and carbs. The big meal of the day.",
+      "category": "food", "days": [1, 2, 3, 4, 5, 6, 7], "start": "@iftar", "duration": 45,
+      "track": true, "stage": "s1", "when": "ramadan", "min": "Break the fast with water, dates and a protein portion."
+    },
+    {
+      "id": "learn-mon", "title": "Learn", "note": "Hands on session, active track.",
+      "category": "learn", "days": [1], "start": "21:00", "duration": 60,
+      "track": true, "stage": "s3", "phases": ["p1", "p2", "p4"], "min": "10 minutes on the current module.", "link": "learn"
+    },
+    {
+      "id": "pfe-mon", "title": "PFE", "note": "Extra evening block for the PFE phase.",
+      "category": "pfe", "days": [1], "start": "21:00", "duration": 60,
+      "track": true, "stage": "s1", "phases": ["p3"], "min": "15 minutes: open the file and do one small thing."
+    },
+    {
+      "id": "pfe-wed", "title": "PFE", "note": "One clear task.",
+      "category": "pfe", "days": [3], "start": "21:00", "duration": 60,
+      "track": true, "stage": "s1", "min": "15 minutes: open the file and do one small thing."
+    },
+    {
+      "id": "sketch", "title": "Sketch", "note": "One space, building or detail. From life or from memory.",
+      "category": "create", "days": [4], "start": "21:45", "duration": 15,
+      "track": true, "stage": "s4", "min": "A 2 minute thumbnail.", "link": "create"
+    },
+    {
+      "id": "ai-lab", "title": "AI lab", "note": "This week's theme.",
+      "category": "learn", "days": [5], "start": "21:00", "duration": 30,
+      "track": true, "stage": "s3", "phases": ["p1", "p2", "p4"], "min": "10 minutes: try one prompt.", "link": "learn"
+    },
+    {
+      "id": "maintenance", "title": "Maintenance session", "note": "Keep the skills warm during the PFE.",
+      "category": "learn", "days": [5], "start": "21:00", "duration": 45,
+      "track": true, "stage": "s3", "phases": ["p3"], "min": "10 minutes.", "link": "learn"
+    },
+    {
+      "id": "free-mon-wed", "title": "Free time", "note": "Gaming: about 1 h max on weeknights.",
+      "category": "free", "days": [1, 3], "start": "22:00", "end": "@sleep-75", "track": false
+    },
+    {
+      "id": "free-mt", "title": "Free time", "note": "Light evening.",
+      "category": "free", "daysFrom": "muayThai", "start": "@muayThai.end+75", "end": "@sleep-75", "track": false
+    },
+    {
+      "id": "free-fri", "title": "Free time", "note": "Gaming is fine tonight.",
+      "category": "free", "days": [5], "start": "21:30", "end": "@sleep-75", "track": false,
+      "phaseOverrides": { "p3": { "start": "21:45" } }
+    },
+    {
+      "id": "urbanism-ride-out", "title": "Ride to the office", "note": "15 min by motorcycle.",
+      "category": "community", "days": [6], "start": "08:45", "duration": 15, "track": false
+    },
+    {
+      "id": "urbanism", "title": "Urbanism session", "note": "I teach urbanism, at his office. Fixed, every Saturday.",
+      "category": "community", "days": [6], "start": "09:00", "duration": 120, "track": false
+    },
+    {
+      "id": "urbanism-ride-back", "title": "Ride home", "note": "15 min by motorcycle.",
+      "category": "community", "days": [6], "start": "11:00", "duration": 15, "track": false
+    },
+    {
+      "id": "pfe-sat", "title": "PFE deep work", "note": "Phone in another room.",
+      "category": "pfe", "days": [6], "start": "11:30", "duration": 120,
+      "track": true, "stage": "s1", "min": "30 minutes on one task."
+    },
+    {
+      "id": "lunch-weekend", "title": "Lunch", "note": "Protein, carbs, vegetables.",
+      "category": "food", "days": [6, 7], "start": "13:30", "duration": 45, "track": false, "when": "normal"
+    },
+    {
+      "id": "arch-session", "title": "Architecture session", "note": "4 week cycle: precedent, visit, speed design, free exploration.",
+      "category": "create", "days": [6], "start": "15:00", "duration": 90,
+      "track": true, "stage": "s4", "phases": ["p1", "p2", "p4"], "min": "20 minutes.", "link": "create"
+    },
+    {
+      "id": "pfe-sat-pm", "title": "PFE", "note": "Takes the architecture session slot during the PFE phase.",
+      "category": "pfe", "days": [6], "start": "15:00", "duration": 90,
+      "track": true, "stage": "s1", "phases": ["p3"], "min": "15 minutes: open the file and do one small thing."
+    },
+    {
+      "id": "pfe-sun", "title": "PFE deep work", "note": "Phone in another room. 3 hours: one hour moved here from Saturday.",
+      "category": "pfe", "days": [7], "start": "10:00", "duration": 180,
+      "track": true, "stage": "s1", "min": "30 minutes on one task."
+    },
+    {
+      "id": "rotaract", "title": "Rotaract", "note": "Think and work on the club. Does not count against you.",
+      "category": "community", "days": [7], "start": "14:15", "duration": 60,
+      "track": true, "counts": false, "stage": "s1", "min": "10 minutes: write the next action for the club."
+    },
+    {
+      "id": "free-sun", "title": "Free time", "note": "Real rest.",
+      "category": "free", "days": [7], "start": "15:15", "end": "16:45", "track": false
+    },
+    {
+      "id": "football", "title": "Football with friends", "note": "Whenever friends play. Does not count against you.",
+      "category": "body", "daysFrom": "football", "start": "@football.start", "end": "@football.end",
+      "track": true, "counts": false, "stage": "s1", "link": "body/log/football"
+    },
+    {
+      "id": "learn-sun", "title": "Learn", "note": "Hands on session, active track.",
+      "category": "learn", "days": [7], "start": "18:30", "duration": 60,
+      "track": true, "stage": "s3", "phases": ["p1", "p2", "p4"], "min": "10 minutes on the current module.", "link": "learn"
+    },
+    {
+      "id": "pfe-sun-eve", "title": "PFE", "note": "Extra evening block for the PFE phase.",
+      "category": "pfe", "days": [7], "start": "18:30", "duration": 60,
+      "track": true, "stage": "s1", "phases": ["p3"], "min": "15 minutes: open the file and do one small thing."
+    },
+    {
+      "id": "review", "title": "Weekly review", "note": "Stats, three questions, one change. Then plan the lunchboxes.",
+      "category": "mind", "days": [7], "start": "20:30", "duration": 20,
+      "track": true, "stage": "s1", "min": "Answer one question: the ONE change for next week.", "link": "review"
+    },
+    {
+      "id": "free-sun-eve", "title": "Free time", "category": "free", "days": [7],
+      "start": "21:00", "end": "@sleep-75", "track": false
+    },
+    {
+      "id": "journal", "title": "Journal and plan", "note": "One win, one lesson, tomorrow's #1 priority.",
+      "category": "mind", "days": [1, 2, 3, 4, 5, 6, 7], "start": "@sleep-75", "duration": 15,
+      "track": true, "stage": "s1", "min": "One line, plus tomorrow's #1 priority."
+    },
+    {
+      "id": "screens-off", "title": "Screens off", "note": "The phone charges outside the bedroom.",
+      "category": "mind", "days": [1, 2, 3, 4, 5, 6, 7], "start": "@sleep-60", "duration": 5,
+      "track": true, "stage": "s4", "min": "Screens off 20 minutes before lights out."
+    },
+    {
+      "id": "reading", "title": "Reading", "note": "20 minutes, on paper or e-reader.",
+      "category": "mind", "days": [1, 2, 3, 4, 5, 6, 7], "start": "@sleep-55", "duration": 20,
+      "track": true, "stage": "s4", "min": "1 page.", "link": "mind"
+    },
+    {
+      "id": "lights-out", "title": "Lights out", "note": "Confirm it the next morning.",
+      "category": "mind", "days": [1, 2, 3, 4, 5, 6, 7], "start": "@sleep", "duration": 5,
+      "track": true, "stage": "s1", "min": "Lights out within 30 minutes of the target."
+    }
+  ]
+}

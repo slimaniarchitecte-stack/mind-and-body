@@ -1,0 +1,9 @@
+{
+  "name": "mind-and-body",
+  "private": true,
+  "type": "module",
+  "description": "No build step and no dependencies. This file only tells Node that the .js files are ES modules, for the tests.",
+  "scripts": {
+    "test": "node tests/run.js"
+  }
+}

@@ -1,0 +1,118 @@
+{
+  "_help": [
+    "dos: my rules to keep. blocks: the timeline blocks that prove the habit (adherence is read from them).",
+    "daily: true means it has no clock time and shows in the Habits checklist on Today.",
+    "days: 1 = Monday ... 7 = Sunday, or the word work / muayThai to follow Settings.",
+    "auto: water means it is kept automatically when the water counter reaches the target.",
+    "donts: things to avoid. Three of them are asked every evening. weeklyAllowance: slips per week that are still fine.",
+    "system: true means the app enforces it itself, it is never asked."
+  ],
+
+  "dos": [
+    {
+      "id": "sleep-window", "title": "In bed by 00:00, up at 7:30",
+      "detail": "Weekends no more than about 1 h later.",
+      "stage": "s1", "blocks": ["wake", "lights-out"],
+      "min": "Within 30 minutes of the target."
+    },
+    {
+      "id": "no-phone-morning", "title": "No phone for the first 20 minutes",
+      "detail": "Get daylight instead.",
+      "stage": "s2", "daily": true, "days": [1, 2, 3, 4, 5, 6, 7],
+      "min": "No phone for the first 5 minutes."
+    },
+    {
+      "id": "water-target", "title": "Water target",
+      "detail": "About 3 L, plus 0.5 L on training days.",
+      "stage": "s2", "daily": true, "days": [1, 2, 3, 4, 5, 6, 7], "auto": "water", "category": "food",
+      "min": "At least 2 L."
+    },
+    {
+      "id": "water-bottle", "title": "Water bottle on my desk at work",
+      "stage": "s2", "daily": true, "days": "work", "category": "food",
+      "min": "A glass of water at every break."
+    },
+    {
+      "id": "stand-hourly", "title": "Stand and move 2 minutes every hour at work",
+      "stage": "s2", "daily": true, "days": "work", "category": "body",
+      "min": "Stand up at least 3 times in the day."
+    },
+    {
+      "id": "evening-plan", "title": "5 minute plan for tomorrow, with one #1 priority",
+      "stage": "s1", "blocks": ["journal"],
+      "min": "Name tomorrow's #1 priority."
+    },
+    {
+      "id": "journal", "title": "3 line journal every night",
+      "detail": "One win, one lesson, tomorrow's #1 priority.",
+      "stage": "s1", "blocks": ["journal"],
+      "min": "One line."
+    },
+    {
+      "id": "screens-off", "title": "Screens off at 23:00",
+      "detail": "Reading on paper or e-reader is fine.",
+      "stage": "s4", "blocks": ["screens-off"],
+      "min": "Screens off 20 minutes before lights out."
+    },
+    {
+      "id": "reading", "title": "Read 20 minutes before sleep",
+      "stage": "s4", "blocks": ["reading"],
+      "min": "1 page."
+    },
+    {
+      "id": "weekly-review", "title": "Weekly review every Sunday",
+      "stage": "s1", "blocks": ["review"],
+      "min": "Answer one question: the ONE change for next week."
+    }
+  ],
+
+  "donts": [
+    {
+      "id": "phone-in-bed", "title": "Phone in bed",
+      "detail": "It charges outside the bedroom.",
+      "stage": "s4", "days": [1, 2, 3, 4, 5, 6, 7]
+    },
+    {
+      "id": "caffeine-late", "title": "Caffeine after 16:00",
+      "stage": "s2", "days": [1, 2, 3, 4, 5, 6, 7]
+    },
+    {
+      "id": "gaming-late", "title": "Gaming after 23:00, or more than about 1 h, on a weeknight",
+      "detail": "Longer sessions are fine on Friday and Saturday.",
+      "stage": "s4", "days": [1, 2, 3, 4, 7]
+    },
+    {
+      "id": "social-scroll", "title": "Social media scrolling over 30 min, or in bed",
+      "stage": "s4", "days": [1, 2, 3, 4, 5, 6, 7]
+    },
+    {
+      "id": "soda", "title": "Soda or sugary juice",
+      "detail": "No more than 2 times a week.",
+      "stage": "s2", "days": [1, 2, 3, 4, 5, 6, 7], "weeklyAllowance": 2
+    },
+    {
+      "id": "skip-meals", "title": "Skipping breakfast or the lunchbox",
+      "detail": "That is where a bulk fails.",
+      "stage": "s1", "days": [1, 2, 3, 4, 5, 6, 7]
+    },
+    {
+      "id": "heavy-meal-pre-mt", "title": "A heavy meal less than 2 h before Muay Thai",
+      "stage": "s1", "days": "muayThai"
+    },
+    {
+      "id": "miss-twice", "title": "Missing the same habit two days in a row",
+      "detail": "The app shows a banner on Today when it happens.",
+      "stage": "s1", "system": true
+    },
+    {
+      "id": "new-habits", "title": "Adding new habits outside the unlock system",
+      "detail": "The unlock schedule decides when something new starts.",
+      "stage": "s1", "system": true
+    },
+    {
+      "id": "pastries", "title": "Pastries or fried snacks as daily filler",
+      "detail": "Occasionally is fine.",
+      "stage": "s2", "days": [1, 2, 3, 4, 5, 6, 7]
+    }
+  ]
+}

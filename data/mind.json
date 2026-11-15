@@ -1,0 +1,36 @@
+{
+  "_help": [
+    "books: the starting reading list. I add my own books in the app.",
+    "optional: extra modules from week 9. Only one at a time, and only when adherence is 80% or more.",
+    "perWeek: how many times a week it is planned. minutes: length of one session."
+  ],
+
+  "books": [
+    { "id": "bk-101", "title": "101 Things I Learned in Architecture School", "author": "Matthew Frederick" },
+    { "id": "bk-zumthor", "title": "Thinking Architecture", "author": "Peter Zumthor" },
+    { "id": "bk-pallasmaa", "title": "The Eyes of the Skin", "author": "Juhani Pallasmaa" },
+    { "id": "bk-alexander", "title": "A Pattern Language", "author": "Christopher Alexander" },
+    { "id": "bk-venturi", "title": "Complexity and Contradiction in Architecture", "author": "Robert Venturi" },
+    { "id": "bk-corbusier", "title": "Towards a New Architecture", "author": "Le Corbusier" },
+    { "id": "bk-clear", "title": "Atomic Habits", "author": "James Clear" },
+    { "id": "bk-newport", "title": "Deep Work", "author": "Cal Newport" }
+  ],
+
+  "reading": { "minutes": 20, "block": "reading", "min": "1 page." },
+
+  "optional": [
+    {
+      "id": "chess", "title": "Chess puzzles", "about": "15 min, 4 times a week. I start around 300 on chess.com.",
+      "minutes": 15, "perWeek": 4, "min": "3 puzzles.", "ratingLog": true
+    },
+    {
+      "id": "spanish", "title": "Spanish", "about": "10 min a day. Beginner.",
+      "minutes": 10, "perWeek": 7, "min": "2 minutes."
+    }
+  ],
+
+  "newTopic": {
+    "title": "Learn something new",
+    "about": "One evening per month, on any topic I choose. Logged with 3 takeaways."
+  }
+}

@@ -1,0 +1,10 @@
+# Local tool settings, not part of the app
+.claude/
+
+# Backups and calendar files you download while testing
+mind-and-body-backup-*.json
+*.ics
+
+# System files
+.DS_Store
+Thumbs.db

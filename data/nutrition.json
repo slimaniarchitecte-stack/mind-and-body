@@ -1,0 +1,215 @@
+{
+  "_help": [
+    "formula: the numbers behind the targets card. goals: calories added to (or removed from) maintenance.",
+    "adjust: every `everyDays` days the app compares the 7 day average weight with 2 weeks before.",
+    "Under `low` kg per week it suggests +step kcal, over `high` kg per week it suggests -step kcal.",
+    "foods: what I can log. Each food is ONE portion: `unit` says how big, kcal and protein are for that portion.",
+    "The values are approximate, from standard food tables. Change them if the label on your food says something else.",
+    "step: how much one tap adds (1 = a whole portion, 0.5 = half a portion).",
+    "mealPlans: one model day per kind of day. items point to foods by id, qty is the number of portions.",
+    "There are no prices in this file. I type what I spend in the app."
+  ],
+
+  "formula": {
+    "proteinPerKg": 1.9,
+    "fatPerKg": 1.1,
+    "goals": {
+      "leanBulk": { "label": "Lean bulk", "delta": 300 },
+      "recomp": { "label": "Recomposition", "delta": 0 },
+      "cut": { "label": "Cut", "delta": -400 }
+    },
+    "adjust": { "everyDays": 14, "low": 0.15, "high": 0.4, "step": 150, "targetPerWeek": 0.25, "minWeighIns": 3 }
+  },
+
+  "water": { "baseMl": 3000, "trainingExtraMl": 500, "minMl": 2000, "stepMl": 250 },
+
+  "proteinMomentG": 20,
+
+  "foodNote": "Approximate values from standard food tables, for the portion written next to each food. Real portions change from day to day. This gives a clear picture, not an exact count.",
+
+  "portionGuide": [
+    "Protein: one palm (meat, chicken, fish), or one bowl of lentils or beans.",
+    "Carbs: one plate of rice, pasta or couscous, or a piece of bread the size of a hand.",
+    "Vegetables: one fist.",
+    "Fat: one tablespoon of oil, or one handful of nuts."
+  ],
+
+  "foods": [
+    { "id": "egg", "name": "Egg", "unit": "1 egg", "kcal": 70, "protein": 6, "step": 1 },
+    { "id": "bread", "name": "Bread", "unit": "1 piece of about 80 g (the size of a hand)", "kcal": 210, "protein": 7, "step": 0.5 },
+    { "id": "oats", "name": "Oats", "unit": "60 g dry (about 6 tablespoons)", "kcal": 230, "protein": 8, "step": 0.5 },
+    { "id": "milk", "name": "Milk", "unit": "1 glass (250 ml)", "kcal": 150, "protein": 8, "step": 0.5 },
+    { "id": "yogurt", "name": "Plain yogurt", "unit": "1 pot (about 110 g)", "kcal": 70, "protein": 4, "step": 1 },
+    { "id": "chicken", "name": "Chicken", "unit": "1 palm (about 120 g cooked)", "kcal": 220, "protein": 33, "step": 0.5 },
+    { "id": "meat", "name": "Red meat", "unit": "1 palm (about 120 g cooked)", "kcal": 300, "protein": 31, "step": 0.5 },
+    { "id": "fish", "name": "Fish", "unit": "1 palm (about 120 g cooked)", "kcal": 160, "protein": 27, "step": 0.5 },
+    { "id": "sardines", "name": "Sardines", "unit": "1 can, or 4 grilled (about 100 g)", "kcal": 210, "protein": 25, "step": 0.5 },
+    { "id": "tuna", "name": "Canned tuna", "unit": "1 can, drained (about 100 g)", "kcal": 180, "protein": 26, "step": 0.5 },
+    { "id": "legumes", "name": "Lentils, beans or chickpeas", "unit": "1 bowl (about 250 g cooked)", "kcal": 300, "protein": 22, "step": 0.5 },
+    { "id": "starch", "name": "Rice, pasta or couscous", "unit": "1 plate (about 200 g cooked)", "kcal": 260, "protein": 6, "step": 0.5 },
+    { "id": "potatoes", "name": "Potatoes", "unit": "2 medium (about 250 g)", "kcal": 215, "protein": 5, "step": 0.5 },
+    { "id": "vegetables", "name": "Vegetables", "unit": "1 fist, cooked or salad", "kcal": 40, "protein": 2, "step": 1 },
+    { "id": "oil", "name": "Olive oil", "unit": "1 tablespoon (also the oil in a sauce)", "kcal": 120, "protein": 0, "step": 1 },
+    { "id": "peanut-butter", "name": "Peanut butter", "unit": "1 tablespoon", "kcal": 95, "protein": 4, "step": 1 },
+    { "id": "nuts", "name": "Nuts", "unit": "1 handful (about 30 g)", "kcal": 180, "protein": 6, "step": 0.5 },
+    { "id": "banana", "name": "Banana", "unit": "1 banana", "kcal": 105, "protein": 1, "step": 1 },
+    { "id": "fruit", "name": "Fruit", "unit": "1 orange or apple", "kcal": 80, "protein": 1, "step": 1 },
+    { "id": "dates", "name": "Dates", "unit": "3 dates", "kcal": 70, "protein": 0, "step": 1 }
+  ],
+
+  "mealPlans": [
+    {
+      "id": "workday", "title": "Workday",
+      "meals": [
+        {
+          "id": "breakfast", "title": "Breakfast", "time": "07:45",
+          "text": "Eggs with bread and olive oil, a banana and a glass of milk.",
+          "items": [ { "food": "egg", "qty": 3 }, { "food": "bread", "qty": 1 }, { "food": "oil", "qty": 1 }, { "food": "banana", "qty": 1 }, { "food": "milk", "qty": 1 } ]
+        },
+        {
+          "id": "lunch", "title": "Lunchbox", "time": "13:00",
+          "text": "Family food from the day before: a big protein portion, carbs, vegetables and bread.",
+          "items": [ { "food": "chicken", "qty": 1 }, { "food": "starch", "qty": 1 }, { "food": "vegetables", "qty": 1 }, { "food": "bread", "qty": 1 }, { "food": "oil", "qty": 1 } ]
+        },
+        {
+          "id": "snack", "title": "Snack", "time": "17:30",
+          "text": "An egg sandwich and a fruit.",
+          "items": [ { "food": "bread", "qty": 1 }, { "food": "egg", "qty": 2 }, { "food": "fruit", "qty": 1 } ]
+        },
+        {
+          "id": "dinner", "title": "Dinner", "time": "19:45",
+          "text": "Family dinner. Lentils or beans count as the protein.",
+          "items": [ { "food": "legumes", "qty": 1 }, { "food": "bread", "qty": 1 }, { "food": "vegetables", "qty": 1 } ]
+        },
+        {
+          "id": "evening", "title": "Before bed", "time": "22:30",
+          "text": "A glass of milk and a spoon of peanut butter, to reach the surplus.",
+          "items": [ { "food": "milk", "qty": 1 }, { "food": "peanut-butter", "qty": 1 } ]
+        }
+      ]
+    },
+    {
+      "id": "muaythai", "title": "Muay Thai day",
+      "meals": [
+        {
+          "id": "breakfast", "title": "Breakfast", "time": "07:45",
+          "text": "Eggs with bread and olive oil, a banana and a glass of milk.",
+          "items": [ { "food": "egg", "qty": 3 }, { "food": "bread", "qty": 1 }, { "food": "oil", "qty": 1 }, { "food": "banana", "qty": 1 }, { "food": "milk", "qty": 1 } ]
+        },
+        {
+          "id": "lunch", "title": "Lunchbox", "time": "13:00",
+          "text": "The last big meal before training: protein, carbs, vegetables and bread.",
+          "items": [ { "food": "chicken", "qty": 1 }, { "food": "starch", "qty": 1 }, { "food": "vegetables", "qty": 1 }, { "food": "bread", "qty": 1 }, { "food": "oil", "qty": 1 } ]
+        },
+        {
+          "id": "snack", "title": "Pre training snack", "time": "17:45",
+          "text": "Light and easy to digest. Nothing heavy before Muay Thai.",
+          "items": [ { "food": "yogurt", "qty": 2 }, { "food": "banana", "qty": 1 }, { "food": "dates", "qty": 1 } ]
+        },
+        {
+          "id": "dinner", "title": "Big dinner", "time": "20:45",
+          "text": "After training: protein and carbs, generous portions.",
+          "items": [ { "food": "sardines", "qty": 1 }, { "food": "starch", "qty": 1 }, { "food": "bread", "qty": 1 }, { "food": "vegetables", "qty": 1 }, { "food": "oil", "qty": 1 } ]
+        },
+        {
+          "id": "evening", "title": "Before bed", "time": "22:30",
+          "text": "A glass of milk.",
+          "items": [ { "food": "milk", "qty": 1 } ]
+        }
+      ]
+    },
+    {
+      "id": "weekend", "title": "Weekend",
+      "meals": [
+        {
+          "id": "breakfast", "title": "Breakfast", "time": "08:15",
+          "text": "Oats with milk, banana and peanut butter, plus two eggs.",
+          "items": [ { "food": "oats", "qty": 1 }, { "food": "milk", "qty": 1 }, { "food": "banana", "qty": 1 }, { "food": "peanut-butter", "qty": 1 }, { "food": "egg", "qty": 2 } ]
+        },
+        {
+          "id": "lunch", "title": "Family lunch", "time": "13:30",
+          "text": "Protein, carbs, two fists of vegetables and bread.",
+          "items": [ { "food": "meat", "qty": 1 }, { "food": "starch", "qty": 1 }, { "food": "vegetables", "qty": 2 }, { "food": "bread", "qty": 1 }, { "food": "oil", "qty": 1 } ]
+        },
+        {
+          "id": "snack", "title": "Snack", "time": "16:30",
+          "text": "A tuna sandwich. On Saturday eat it after Muay Thai, and take only a banana before.",
+          "items": [ { "food": "bread", "qty": 1 }, { "food": "tuna", "qty": 1 } ]
+        },
+        {
+          "id": "dinner", "title": "Dinner", "time": "20:00",
+          "text": "Family dinner, with a real protein portion.",
+          "items": [ { "food": "legumes", "qty": 1 }, { "food": "bread", "qty": 1 }, { "food": "vegetables", "qty": 1 } ]
+        },
+        {
+          "id": "evening", "title": "Before bed", "time": "22:30",
+          "text": "A yogurt and a handful of nuts.",
+          "items": [ { "food": "yogurt", "qty": 1 }, { "food": "nuts", "qty": 1 } ]
+        }
+      ]
+    }
+  ],
+
+  "planNote": "You do not choose the family dish, so keep the portions instead: one palm of protein, one plate of carbs, one fist of vegetables, and bread. Swap freely inside a line: chicken, fish, sardines, eggs or lentils all count as the protein.",
+
+  "lowCost": {
+    "title": "Protein that costs little",
+    "items": ["Eggs", "Lentils, beans and chickpeas, bought dry and cooked at home", "Canned sardines", "Milk and plain yogurt", "Oats", "Peanut butter"],
+    "note": "Red meat, nuts and ready made snacks cost more for the same protein. Keep them small."
+  },
+
+  "checklist": [
+    { "id": "vegLunch", "title": "Vegetables at lunch", "detail": "About a fist." },
+    { "id": "vegDinner", "title": "Vegetables at dinner", "detail": "About a fist." },
+    { "id": "fruit1", "title": "Fruit 1" },
+    { "id": "fruit2", "title": "Fruit 2" },
+    { "id": "lunchboxPacked", "title": "Tomorrow's lunchbox is packed", "detail": "The night before.", "days": "beforeWork" }
+  ],
+
+  "ideas": [
+    {
+      "id": "lunchbox", "title": "Lunchbox ideas",
+      "items": [
+        "Chicken, rice and vegetables",
+        "Meat from yesterday's dinner, bread and a salad",
+        "Fish, potatoes and vegetables",
+        "Lentils, bread and a boiled egg",
+        "White beans, bread and a piece of chicken",
+        "Couscous with vegetables and an extra protein portion"
+      ]
+    },
+    {
+      "id": "snack", "title": "Snack ideas",
+      "items": [
+        "Tuna sandwich and a fruit",
+        "Egg sandwich and a fruit",
+        "Chicken or cheese sandwich and a fruit",
+        "Yogurt with dates and nuts",
+        "A banana with peanut butter and a glass of milk"
+      ]
+    },
+    {
+      "id": "boosters", "title": "Calorie boosters",
+      "note": "Easy ways to add calories without a bigger plate. When the app suggests more calories, add one of these a day.",
+      "items": ["Olive oil", "Nuts", "Peanut butter", "Amlou", "Dates", "Bananas", "Milk"]
+    }
+  ],
+
+  "grocery": [
+    { "id": "eggs", "name": "Eggs" },
+    { "id": "oats", "name": "Oats" },
+    { "id": "milk", "name": "Milk" },
+    { "id": "yogurt", "name": "Yogurt" },
+    { "id": "peanut-butter", "name": "Peanut butter" },
+    { "id": "bananas", "name": "Bananas" },
+    { "id": "dates", "name": "Dates" },
+    { "id": "nuts", "name": "Nuts" },
+    { "id": "tuna", "name": "Canned tuna" },
+    { "id": "bread", "name": "Whole wheat bread" }
+  ],
+
+  "familyNote": {
+    "title": "What I ask my family for this week",
+    "placeholder": "An extra portion for the lunchbox. More protein at dinner."
+  }
+}

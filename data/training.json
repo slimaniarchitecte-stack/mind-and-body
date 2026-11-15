@@ -1,0 +1,60 @@
+{
+  "_help": [
+    "sessions: the two strength sessions. block: the timeline block that gets ticked when the session is saved.",
+    "exercises: sets = number of sets, range = [low, high] reps (or seconds when unit is s).",
+    "variations: from easier to harder. start: the one I begin with (0 = first).",
+    "When every set reaches the top of the range, the app suggests the next variation.",
+    "needsBar: this variation needs a pull up bar (Settings)."
+  ],
+
+  "sessions": [
+    {
+      "id": "a", "title": "Strength A", "block": "strength-a",
+      "about": "About 25 min. Bodyweight, at home.",
+      "min": "10 push ups + 10 squats.",
+      "exercises": [
+        {
+          "id": "push-up", "name": "Push ups", "sets": 3, "range": [8, 15], "unit": "reps",
+          "variations": ["Incline push ups", "Push ups", "Decline push ups", "Archer push ups"], "start": 1
+        },
+        { "id": "split-squat", "name": "Bulgarian split squats", "sets": 3, "range": [8, 12], "unit": "reps", "per": "per leg" },
+        { "id": "pike-push-up", "name": "Pike push ups", "sets": 3, "range": [6, 10], "unit": "reps" },
+        { "id": "glute-bridge", "name": "Single leg glute bridge", "sets": 3, "range": [10, 15], "unit": "reps", "per": "per leg" },
+        { "id": "plank", "name": "Plank", "sets": 3, "range": [30, 45], "unit": "s" }
+      ]
+    },
+    {
+      "id": "b", "title": "Strength B", "block": "strength-b",
+      "about": "About 25 min. Bodyweight, at home.",
+      "min": "10 push ups + 10 squats.",
+      "exercises": [
+        {
+          "id": "pull", "name": "Pull ups or table rows", "sets": 3, "range": [5, 10], "unit": "reps",
+          "variations": ["Table rows", "Pull ups"], "start": 0, "needsBar": ["Pull ups"]
+        },
+        { "id": "tempo-squat", "name": "Slow tempo squats", "sets": 3, "range": [12, 15], "unit": "reps" },
+        { "id": "chair-dip", "name": "Chair dips", "sets": 3, "range": [8, 12], "unit": "reps" },
+        {
+          "id": "hamstring", "name": "Hamstring slides or Nordic negatives", "sets": 3, "range": [5, 8], "unit": "reps",
+          "variations": ["Hamstring slides", "Nordic curl negatives"], "start": 0
+        },
+        { "id": "hollow-hold", "name": "Hollow hold", "sets": 3, "range": [20, 30], "unit": "s" }
+      ]
+    }
+  ],
+
+  "harderHint": "Top of the range on every set. Make it harder: slower tempo, a pause at the bottom, or a loaded backpack.",
+
+  "logs": [
+    { "id": "muaythai", "title": "Muay Thai", "block": "muaythai", "stage": "s1" },
+    { "id": "run", "title": "Easy run", "block": "run", "stage": "s5" },
+    { "id": "football", "title": "Football", "block": "football", "stage": "s1" },
+    { "id": "drill", "title": "Ball mastery drill", "stage": "s5", "about": "10 min: juggling, first touch against a wall. Optional, twice a week." }
+  ],
+
+  "mobility": {
+    "title": "Mobility after Muay Thai",
+    "about": "10 min.",
+    "areas": ["Hips", "Hamstrings", "Upper back"]
+  }
+}

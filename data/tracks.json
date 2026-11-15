@@ -1,0 +1,106 @@
+{
+  "_help": [
+    "tracks: my learning tracks. kind: focus = the one technical track that is active in its dates, background = runs next to it.",
+    "start / end: dates. startsAt / endsAt: defense or cesi means it follows the dates in Settings.",
+    "modules: the checklist of a track. project: the mini project.",
+    "Resource links are not in this file. I add them myself in the app, per module.",
+    "aiLab.themes rotate, one per week, starting on aiLab.start."
+  ],
+
+  "tracks": [
+    {
+      "id": "dynamo", "title": "Dynamo for Revit", "kind": "focus",
+      "start": "2026-12-14", "end": "2027-02-28",
+      "about": "Monday and Sunday sessions are hands on. Lunch tutorials are theory.",
+      "modules": [
+        { "id": "dyn-1", "title": "Interface, nodes and data types" },
+        { "id": "dyn-2", "title": "Lists and list levels" },
+        { "id": "dyn-3", "title": "Selecting Revit elements, reading and writing parameters" },
+        { "id": "dyn-4", "title": "Excel import and export" },
+        { "id": "dyn-5", "title": "Automating views and sheets" },
+        { "id": "dyn-6", "title": "Intro to the Python node" },
+        { "id": "dyn-7", "title": "Dynamo Player" }
+      ],
+      "project": "One script that saves real time at work or on my PFE. For example auto numbering rooms, or pushing data from Excel into Revit."
+    },
+    {
+      "id": "navisworks", "title": "Navisworks", "kind": "focus",
+      "start": "2027-03-01", "end": "2027-04-30",
+      "about": "Monday and Sunday sessions are hands on. Lunch tutorials are theory.",
+      "modules": [
+        { "id": "nav-1", "title": "Appending models and navigation" },
+        { "id": "nav-2", "title": "Selection sets and search sets" },
+        { "id": "nav-3", "title": "Clash Detective and clash reports" },
+        { "id": "nav-4", "title": "TimeLiner 4D sequence" },
+        { "id": "nav-5", "title": "Quantification" },
+        { "id": "nav-6", "title": "Viewpoints and model review" }
+      ],
+      "project": "A clash report and a 4D sequence on a real or PFE model."
+    },
+    {
+      "id": "pfe-period", "title": "PFE period", "kind": "focus",
+      "start": "2027-05-01", "endsAt": "defense",
+      "about": "One 45 min maintenance session per week. The rest of the skills are used inside the PFE.",
+      "modules": [],
+      "project": null
+    },
+    {
+      "id": "rhino", "title": "Rhino + Grasshopper", "kind": "focus",
+      "startsAt": "defense", "endsAt": "cesi",
+      "about": "After the defense, until CESI starts.",
+      "modules": [
+        { "id": "rh-1", "title": "Rhino modeling basics" },
+        { "id": "rh-2", "title": "Grasshopper data flow" },
+        { "id": "rh-3", "title": "Data trees" },
+        { "id": "rh-4", "title": "Attractors and patterns" },
+        { "id": "rh-5", "title": "Facade panelization" },
+        { "id": "rh-6", "title": "Rhino.Inside.Revit to connect with BIM" }
+      ],
+      "project": "A parametric facade or pavilion."
+    },
+    {
+      "id": "revit", "title": "Revit advanced", "kind": "background",
+      "window": "Ongoing, through my work",
+      "about": "One micro goal per month.",
+      "monthlyGoal": true,
+      "modules": [
+        { "id": "rev-1", "title": "View templates and filters" },
+        { "id": "rev-2", "title": "Parametric families: nested families, shared parameters, formulas" },
+        { "id": "rev-3", "title": "Schedules and quantities" },
+        { "id": "rev-4", "title": "Worksharing basics" },
+        { "id": "rev-5", "title": "Setting up a project template" }
+      ],
+      "project": null
+    },
+    {
+      "id": "cesi", "title": "CESI preparation", "kind": "background",
+      "startsAt": "defense", "window": "Summer 2027",
+      "about": "Theory, next to Rhino + Grasshopper.",
+      "modules": [
+        { "id": "cesi-1", "title": "ISO 19650 basics" },
+        { "id": "cesi-2", "title": "Structure of a BIM execution plan (BEP)" },
+        { "id": "cesi-3", "title": "French construction phases and vocabulary (loi MOP)" },
+        { "id": "cesi-4", "title": "Basics of construction management: planning, costs, work packages" }
+      ],
+      "project": null
+    }
+  ],
+
+  "aiLab": {
+    "title": "AI for architecture",
+    "about": "AI lab, Friday, 30 min.",
+    "start": "2026-12-14",
+    "themes": [
+      { "id": "ai-1", "title": "Concept images and moodboards" },
+      { "id": "ai-2", "title": "Using an AI assistant to write and debug Dynamo and Python scripts" },
+      { "id": "ai-3", "title": "AI assisted rendering of my own views" },
+      { "id": "ai-4", "title": "AI help to structure and write the PFE report" }
+    ]
+  },
+
+  "sessionKinds": [
+    { "id": "hands-on", "title": "Hands on", "blocks": ["learn-mon", "learn-sun", "maintenance"] },
+    { "id": "theory", "title": "Lunch tutorial", "blocks": ["tutorial"] },
+    { "id": "ai-lab", "title": "AI lab", "blocks": ["ai-lab"] }
+  ]
+}

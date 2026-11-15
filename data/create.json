@@ -1,0 +1,65 @@
+{
+  "_help": [
+    "cycle: the Saturday architecture session turns every 4 weeks, in this order.",
+    "precedentFields: the template of a precedent study.",
+    "briefs: the design challenges. Add your own lines, the app picks one at random.",
+    "challengeMinutes: length of the speed design timer."
+  ],
+
+  "cycle": [
+    { "id": "precedent", "title": "Precedent study", "text": "One project analyzed with the template." },
+    { "id": "visit", "title": "Building visit", "text": "A building in Rabat, Salé or Casablanca, with sketches and photos." },
+    { "id": "challenge", "title": "Speed design challenge", "text": "2 hours, a random brief, with the timer." },
+    { "id": "explore", "title": "Free exploration", "text": "Model making, a material study, or AI assisted concept exploration." }
+  ],
+
+  "challengeMinutes": 120,
+
+  "precedentFields": [
+    { "key": "architect", "label": "Architect" },
+    { "key": "year", "label": "Year" },
+    { "key": "place", "label": "Place" },
+    { "key": "concept", "label": "Concept", "long": true },
+    { "key": "plan", "label": "Plan", "long": true },
+    { "key": "section", "label": "Section", "long": true },
+    { "key": "structure", "label": "Structure", "long": true },
+    { "key": "light", "label": "Light", "long": true },
+    { "key": "materials", "label": "Materials", "long": true },
+    { "key": "steal", "label": "What I steal from it", "long": true }
+  ],
+
+  "sketchSubjects": ["A space", "A building", "A detail"],
+
+  "briefs": [
+    { "id": "b01", "text": "A 20 m² reading pavilion in a medina courtyard." },
+    { "id": "b02", "text": "A bus stop that really gives shade in a Rabat summer." },
+    { "id": "b03", "text": "A student micro housing unit of 18 m²." },
+    { "id": "b04", "text": "A tea kiosk on the Bouregreg riverbank." },
+    { "id": "b05", "text": "A rooftop room for one person on an old medina house." },
+    { "id": "b06", "text": "A public fountain and a bench for a small neighborhood square." },
+    { "id": "b07", "text": "A market stall that folds away at night." },
+    { "id": "b08", "text": "A prayer room for 30 people inside an office building." },
+    { "id": "b09", "text": "A stair that is also a place to sit, between two street levels." },
+    { "id": "b10", "text": "A shaded waiting area in front of a public administration." },
+    { "id": "b11", "text": "A tram stop with seating for 12 and protection from the Atlantic wind." },
+    { "id": "b12", "text": "A small library for a primary school in a rural village." },
+    { "id": "b13", "text": "A workshop and shop for a zellige craftsman, 40 m²." },
+    { "id": "b14", "text": "A beach cabin for surfers, with no connection to water or electricity." },
+    { "id": "b15", "text": "A family house on a lot 6 m wide, between two party walls." },
+    { "id": "b16", "text": "A covered bicycle parking for a university campus." },
+    { "id": "b17", "text": "A footbridge over a small oued." },
+    { "id": "b18", "text": "A hammam changing room with daylight and no window to the street." },
+    { "id": "b19", "text": "A viewing platform at the edge of a cliff on the Atlantic coast." },
+    { "id": "b20", "text": "A water tower that its village is proud of." },
+    { "id": "b21", "text": "A night shelter for 10 people that feels dignified." },
+    { "id": "b22", "text": "A study room for architecture students, open day and night." },
+    { "id": "b23", "text": "A courtyard house for a family of five, built with only two materials." },
+    { "id": "b24", "text": "A neighborhood bread oven with a place to wait and talk." },
+    { "id": "b25", "text": "A facade for a 5 storey apartment building that faces west." },
+    { "id": "b26", "text": "A kindergarten classroom that opens completely to a garden." },
+    { "id": "b27", "text": "A roadside rest stop on the road to the Atlas." },
+    { "id": "b28", "text": "A pavilion to show one single object." },
+    { "id": "b29", "text": "The entrance of a small mosque: from street noise to silence in 10 m." },
+    { "id": "b30", "text": "A desk and storage wall for a 9 m² student bedroom." }
+  ]
+}

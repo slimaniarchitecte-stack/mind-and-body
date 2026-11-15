@@ -1,0 +1,79 @@
+@font-face {
+  font-family: "Inter";
+  src: url("../fonts/InterVariable.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  color-scheme: light;
+  /* The five brand colors from the fitness reference. */
+  --paper: #F5F5F5; --surface: #E8E8EA;
+  --primary: #2B2D42; --accent: #C6FF00; --on-accent: #121318;
+  --ink: #121318; --ink-2: #454759; --ink-3: #606272;
+  --line: #D2D2D9; --line-2: #858696;
+  --shade: rgba(18,19,24,.5);
+  --mind: #2B2D42; --body: #2B2D42;
+  --c-body: #2B2D42; --t-body: #E8E8EA;
+  --c-food: #2B2D42; --t-food: #E8E8EA;
+  --c-learn: #2B2D42; --t-learn: #E8E8EA;
+  --c-create: #2B2D42; --t-create: #E8E8EA;
+  --c-mind: #2B2D42; --t-mind: #E8E8EA;
+  --c-pfe: #2B2D42; --t-pfe: #E8E8EA;
+  --c-community: #2B2D42; --t-community: #E8E8EA;
+  --c-work: #2B2D42; --t-work: #E8E8EA;
+  --c-free: #2B2D42; --t-free: #E8E8EA;
+  /* Red is reserved for errors and destructive actions. */
+  --danger: #A8321F;
+  --font: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --r: 16px; --pad: 20px; --ease: cubic-bezier(.2,.7,.2,1);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+  color-scheme: dark;
+  --paper: #121318; --surface: #2B2D42;
+  --ink: #F5F5F5; --ink-2: #E8E8EA; --ink-3: #BCBDC7;
+  --line: #3F4155; --line-2: #76788B;
+  --mind: #C6FF00; --body: #C6FF00;
+  --shade: rgba(18,19,24,.7);
+  --danger: #FF9B96;
+  --c-body: #C6FF00; --t-body: #2B2D42;
+  --c-food: #C6FF00; --t-food: #2B2D42;
+  --c-learn: #C6FF00; --t-learn: #2B2D42;
+  --c-create: #C6FF00; --t-create: #2B2D42;
+  --c-mind: #C6FF00; --t-mind: #2B2D42;
+  --c-pfe: #C6FF00; --t-pfe: #2B2D42;
+  --c-community: #C6FF00; --t-community: #2B2D42;
+  --c-work: #C6FF00; --t-work: #2B2D42;
+  --c-free: #C6FF00; --t-free: #2B2D42;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --paper: #121318; --surface: #2B2D42;
+  --ink: #F5F5F5; --ink-2: #E8E8EA; --ink-3: #BCBDC7;
+  --line: #3F4155; --line-2: #76788B;
+  --mind: #C6FF00; --body: #C6FF00;
+  --shade: rgba(18,19,24,.7);
+  --danger: #FF9B96;
+  --c-body: #C6FF00; --t-body: #2B2D42;
+  --c-food: #C6FF00; --t-food: #2B2D42;
+  --c-learn: #C6FF00; --t-learn: #2B2D42;
+  --c-create: #C6FF00; --t-create: #2B2D42;
+  --c-mind: #C6FF00; --t-mind: #2B2D42;
+  --c-pfe: #C6FF00; --t-pfe: #2B2D42;
+  --c-community: #C6FF00; --t-community: #2B2D42;
+  --c-work: #C6FF00; --t-work: #2B2D42;
+  --c-free: #C6FF00; --t-free: #2B2D42;
+}
+/* One class per category sets --c (color) and --t (tint) for everything inside. */
+.cat-body   { --c: var(--c-body);   --t: var(--t-body); }
+.cat-food   { --c: var(--c-food);   --t: var(--t-food); }
+.cat-learn  { --c: var(--c-learn);  --t: var(--t-learn); }
+.cat-create { --c: var(--c-create); --t: var(--t-create); }
+.cat-mind   { --c: var(--c-mind);   --t: var(--t-mind); }
+.cat-pfe    { --c: var(--c-pfe);    --t: var(--t-pfe); }
+.cat-community { --c: var(--c-community); --t: var(--t-community); }
+.cat-work   { --c: var(--c-work);   --t: var(--t-work); }
+.cat-free   { --c: var(--c-free);   --t: var(--t-free); }

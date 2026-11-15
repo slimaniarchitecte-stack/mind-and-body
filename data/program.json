@@ -1,0 +1,104 @@
+{
+  "schema": 1,
+  "name": "Mind and Body",
+  "startDate": "2026-11-16",
+  "dayStartHour": 4,
+
+  "categories": [
+    { "id": "body", "label": "Body" },
+    { "id": "food", "label": "Food" },
+    { "id": "learn", "label": "Learn" },
+    { "id": "create", "label": "Create" },
+    { "id": "mind", "label": "Mind" },
+    { "id": "pfe", "label": "PFE" },
+    { "id": "community", "label": "Community" },
+    { "id": "work", "label": "Work" },
+    { "id": "free", "label": "Free" }
+  ],
+
+  "phases": [
+    {
+      "id": "p1", "n": 1, "name": "Foundations",
+      "start": "2026-11-16", "end": "2027-01-10",
+      "summary": "Progressive unlock. New blocks arrive in stages, only when the active ones hold."
+    },
+    {
+      "id": "p2", "n": 2, "name": "Build",
+      "start": "2027-01-11", "end": "2027-04-30",
+      "summary": "Full template week. Dynamo, then Navisworks."
+    },
+    {
+      "id": "p3", "n": 3, "name": "PFE",
+      "start": "2027-05-01", "endsAt": "defense",
+      "summary": "PFE takes Monday and Sunday evenings and the Saturday afternoon. Learning drops to one 45 min maintenance session. Training stays."
+    },
+    {
+      "id": "p4", "n": 4, "name": "Bridge to CESI",
+      "startsAt": "defense", "endsAt": "cesi",
+      "summary": "Rhino + Grasshopper and CESI preparation."
+    }
+  ],
+
+  "stages": [
+    {
+      "id": "s1", "n": 1, "weeks": "Weeks 1 to 2", "date": "2026-11-16",
+      "summary": "Sleep window. Breakfast and lunchbox with protein. Muay Thai x3. PFE blocks. Evening plan and 3 line journal. Weekly review. Football whenever friends play."
+    },
+    {
+      "id": "s2", "n": 2, "weeks": "Weeks 3 to 4", "date": "2026-11-30",
+      "summary": "Strength A and B. Water target. Mobility after Muay Thai. No phone for the first 20 minutes. Water bottle on the desk. Stand every hour."
+    },
+    {
+      "id": "s3", "n": 3, "weeks": "Weeks 5 to 6", "date": "2026-12-14",
+      "summary": "Learn blocks (Dynamo starts). AI lab. Lunch tutorials."
+    },
+    {
+      "id": "s4", "n": 4, "weeks": "Weeks 7 to 8", "date": "2026-12-28",
+      "summary": "Thursday sketch. Saturday architecture session. Reading 20 min before bed. Screens off at 23:00."
+    },
+    {
+      "id": "s5", "n": 5, "weeks": "Week 9 and after", "date": "2027-01-11",
+      "summary": "Easy run on Wednesday. Optional modules, only one at a time."
+    }
+  ],
+
+  "unlock": {
+    "windowDays": 14,
+    "threshold": 0.8,
+    "postponeDays": 7,
+    "minGapDays": 14
+  },
+
+  "settings": {
+    "_profileNote": "This file is public when the app is on GitHub. The profile below holds rough values on purpose. The real birth date, height and weight are typed in the app, under Settings, and stay on the device.",
+    "profile": {
+      "birthDate": "2003-01-01",
+      "heightCm": 175,
+      "weightKg": 70,
+      "goal": "leanBulk",
+      "activityFactor": 1.55
+    },
+    "wake": "07:30",
+    "wakeSaturday": "08:00",
+    "wakeWeekend": "08:30",
+    "sleep": "00:00",
+    "sleepSaturday": "00:30",
+    "work": { "days": [1, 2, 3, 4, 5], "start": "09:00", "end": "17:00" },
+    "commuteMin": 30,
+    "muayThai": { "days": [2, 4, 6], "start": "19:00", "end": "20:00" },
+    "football": { "day": 7, "start": "17:00", "durationMin": 90 },
+    "phaseDates": {},
+    "defenseDate": "",
+    "cesiStart": "",
+    "theme": "light",
+    "pullUpBar": false,
+    "notifications": false,
+    "ramadan": {
+      "on": false,
+      "iftar": "18:30",
+      "suhoor": "05:00",
+      "work": { "start": "09:00", "end": "15:00" },
+      "muayThai": { "start": "21:30", "end": "22:30" }
+    }
+  }
+}
