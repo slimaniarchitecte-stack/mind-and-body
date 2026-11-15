@@ -100,12 +100,12 @@
     },
     {
       "id": "pfe-mon", "title": "PFE", "note": "Extra evening block for the PFE phase.",
-      "category": "pfe", "days": [1], "start": "21:00", "duration": 60,
+      "category": "pfe", "link": "pfe", "days": [1], "start": "21:00", "duration": 60,
       "track": true, "stage": "s1", "phases": ["p3"], "min": "15 minutes: open the file and do one small thing."
     },
     {
       "id": "pfe-wed", "title": "PFE", "note": "One clear task.",
-      "category": "pfe", "days": [3], "start": "21:00", "duration": 60,
+      "category": "pfe", "link": "pfe", "days": [3], "start": "21:00", "duration": 60,
       "track": true, "stage": "s1", "min": "15 minutes: open the file and do one small thing."
     },
     {
@@ -150,7 +150,7 @@
     },
     {
       "id": "pfe-sat", "title": "PFE deep work", "note": "Phone in another room.",
-      "category": "pfe", "days": [6], "start": "11:30", "duration": 120,
+      "category": "pfe", "link": "pfe", "days": [6], "start": "11:30", "duration": 120,
       "track": true, "stage": "s1", "min": "30 minutes on one task."
     },
     {
@@ -164,12 +164,12 @@
     },
     {
       "id": "pfe-sat-pm", "title": "PFE", "note": "Takes the architecture session slot during the PFE phase.",
-      "category": "pfe", "days": [6], "start": "15:00", "duration": 90,
+      "category": "pfe", "link": "pfe", "days": [6], "start": "15:00", "duration": 90,
       "track": true, "stage": "s1", "phases": ["p3"], "min": "15 minutes: open the file and do one small thing."
     },
     {
       "id": "pfe-sun", "title": "PFE deep work", "note": "Phone in another room. 3 hours: one hour moved here from Saturday.",
-      "category": "pfe", "days": [7], "start": "10:00", "duration": 180,
+      "category": "pfe", "link": "pfe", "days": [7], "start": "10:00", "duration": 180,
       "track": true, "stage": "s1", "min": "30 minutes on one task."
     },
     {
@@ -193,7 +193,7 @@
     },
     {
       "id": "pfe-sun-eve", "title": "PFE", "note": "Extra evening block for the PFE phase.",
-      "category": "pfe", "days": [7], "start": "18:30", "duration": 60,
+      "category": "pfe", "link": "pfe", "days": [7], "start": "18:30", "duration": 60,
       "track": true, "stage": "s1", "phases": ["p3"], "min": "15 minutes: open the file and do one small thing."
     },
     {

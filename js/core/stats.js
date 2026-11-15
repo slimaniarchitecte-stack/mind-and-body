@@ -80,6 +80,38 @@ export function weekStats(ctx, getDay, monday, extra = {}) {
   };
 }
 
+export const TRAINING_BLOCKS = ['muaythai', 'strength-a', 'strength-b', 'run'];
+
+// The running week, for the card on Today. Blocks later today are not counted as missed yet:
+// today only adds what is already ticked.
+export function weekSoFar(ctx, getDay, today, startDate) {
+  const monday = mondayOf(today);
+  const sunday = addDays(monday, 6);
+  const from = startDate > monday ? startDate : monday;
+  const yesterday = addDays(today, -1);
+  const past = yesterday >= from ? adherence(ctx, getDay, from, yesterday) : { due: 0, kept: 0 };
+  const todayKept = today >= from ? adherence(ctx, getDay, today, today).kept : 0;
+  const kept = past.kept + todayKept;
+  const due = past.due + todayKept;
+
+  let water = 0;
+  let waterDays = 0;
+  for (let d = monday; d <= today; d = addDays(d, 1)) {
+    const ml = getDay(d)?.water ?? 0;
+    if (ml > 0) { water += ml; waterDays += 1; }
+  }
+
+  return {
+    monday,
+    kept,
+    due,
+    pct: due ? kept / due : null,
+    training: from <= sunday ? sessionCount(ctx, getDay, from, sunday, TRAINING_BLOCKS) : { due: 0, kept: 0 },
+    waterAvgL: waterDays ? water / waterDays / 1000 : null,
+    pfeMinutes: keptMinutes(ctx, getDay, from, sunday, 'pfe'),
+  };
+}
+
 // Adherence week by week, oldest first, for the last `weeks` weeks that ended before `today`'s week ends.
 export function weeklyAdherence(ctx, getDay, today, weeks = 12) {
   const thisMonday = mondayOf(today);

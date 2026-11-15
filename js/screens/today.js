@@ -15,10 +15,17 @@ import {
 import { blocksForDate, dailyHabitsForDate, dontsForDate, nowNext, phaseFor } from '../core/schedule.js';
 import { dayStats, itemStatus, missedTwice, trackedItems } from '../core/adherence.js';
 import { nextLockedStage } from '../core/unlock.js';
-import { waterCell, proteinCell, foodSummary } from './shared.js';
+import { waterCell, proteinCell, foodSummary, changeFoodLog } from './shared.js';
+import { MEALS, planFor, planEntries, addEntries, mealAt } from '../core/food.js';
+import { weekSoFar } from '../core/stats.js';
+import { monthMoney, spentBetween } from '../core/money.js';
+import { pfeProgress } from '../core/pfe.js';
+import { waterTarget } from '../core/schedule.js';
+import { openFoodSheet } from './food.js';
+import { openSpendSheet, dh } from './money.js';
 
 const SKIP_REASONS = ['Tired', 'No time', 'Sick', 'Forgot', 'Plans changed'];
-const LINK_LABELS = { body: 'Open in Body', learn: 'Open Learn', create: 'Open Create', mind: 'Open Mind', review: 'Start the review', food: 'Open Food' };
+const LINK_LABELS = { body: 'Open in Body', learn: 'Open Learn', create: 'Open Create', mind: 'Open Mind', review: 'Start the review', food: 'Open Food', pfe: 'Open my PFE steps' };
 
 function autosize(el) {
   el.style.height = 'auto';
@@ -230,13 +237,96 @@ export function today(root, route) {
     ));
   };
 
-  // ---- shortcuts ------------------------------------------------------------
+  // ---- quick log: the four things I log most, one tap each ---------------------
 
-  const quick = started && isToday
-    ? h('nav', { class: 'quick', 'aria-label': 'Shortcuts' },
-      [['food', 'food', 'Log food'], ['body', 'body', 'Training'], ['learn', 'learn', 'Learning'], ['create', 'create', 'Idea']].map(([route_, iconName, label]) => h('a', { class: 'quick-item', href: `#/${route_}` }, icon(iconName, 20), h('span', {}, label))),
+  const nutrition = store.state.data.nutrition;
+  const todayPlan = planFor(nutrition.mealPlans, {
+    isWorkday: ctx.settings.work.days.includes(dow(date)),
+    isMuayThai: blocks.some((b) => b.id === 'muaythai'),
+  });
+
+  const addWater = async () => {
+    const step = ctx.water?.stepMl ?? 250;
+    await store.updateDay(date, (d) => { d.water = (d.water ?? 0) + step; });
+    const total = store.day(date).water;
+    toast(`Water: ${(total / 1000).toFixed(2)} of ${(waterTarget(ctx, date) / 1000).toFixed(1)} L`, {
+      action: { label: 'Undo', run: () => store.updateDay(date, (d) => { d.water = Math.max(0, (d.water ?? 0) - step); }) },
+    });
+  };
+
+  // The meal that fits the clock. If it is planned and not logged yet, one tap logs the plan.
+  const mealId = mealAt(appMinutes(clock.now(), 0) % 1440);
+  const mealName = (MEALS.find((m) => m.id === mealId)?.title ?? 'Meal').toLowerCase();
+  const plannedMeal = todayPlan.meals.find((m) => m.id === mealId);
+  const mealLogged = (day.foodLog ?? []).some((e) => e.meal === mealId);
+  const ateMeal = async () => {
+    if (!plannedMeal || mealLogged) {
+      openFoodSheet(date, mealId);
+      return;
+    }
+    const before = new Set((store.day(date).foodLog ?? []).map((e) => e.id));
+    await changeFoodLog(date, (log) => addEntries(log, planEntries(todayPlan, mealId), () => store.uid('f')));
+    const added = new Set((store.day(date).foodLog ?? []).map((e) => e.id).filter((id) => !before.has(id)));
+    toast(`${plannedMeal.title ?? 'Meal'} logged as planned.`, {
+      action: { label: 'Undo', run: () => changeFoodLog(date, (log) => log.filter((e) => !added.has(e.id))) },
+    });
+  };
+
+  const openWeight = () => {
+    const input = h('input', {
+      class: 'input input-big', type: 'text', inputmode: 'decimal', autocomplete: 'off', placeholder: '00.0',
+      value: store.day(date).weight ?? '', 'aria-label': 'Weight in kg',
+    });
+    const save = async () => {
+      const v = Number(String(input.value).replace(',', '.'));
+      if (!(v >= 30 && v <= 250)) { input.focus(); toast('Type your weight, for example 70.4'); return; }
+      await store.updateDay(date, (d) => { d.weight = Math.round(v * 10) / 10; });
+      sheet.close();
+      toast(`Weight ${Math.round(v * 10) / 10} kg saved.`);
+    };
+    input.addEventListener('keydown', (e) => { if (e.key === 'Enter') save(); });
+    const sheet = openSheet({
+      eyebrow: 'Morning weight',
+      title: 'My weight',
+      body: [h('div', { class: 'money-amount' }, input, h('span', {}, 'kg')), h('p', { class: 'form-hint' }, 'After the toilet, before eating.')],
+      footer: [h('button', { class: 'btn btn-solid btn-grow', type: 'button', onclick: save }, 'Save')],
+    });
+    setTimeout(() => input.focus(), 60);
+  };
+
+  const qBtn = (iconName, label, sub, onclick, on) => h('button', { class: cx('quick-item', on && 'is-on'), type: 'button', onclick },
+    icon(iconName, 20), h('span', {}, label), sub ? h('small', {}, sub) : null);
+
+  const quick = isToday
+    ? h('div', { class: 'quick', role: 'group', 'aria-label': 'Quick log' },
+      qBtn('drop', `+${ctx.water?.stepMl ?? 250} ml`, `${((day.water ?? 0) / 1000).toFixed(2)} L`, addWater),
+      qBtn('food', plannedMeal && !mealLogged ? `Ate ${mealName}` : 'Log food', plannedMeal && !mealLogged ? 'as planned' : mealLogged ? `${mealName} done` : null, ateMeal, mealLogged),
+      qBtn('money', 'Spent', null, () => openSpendSheet()),
+      qBtn('scale', 'Weight', day.weight ? `${day.weight} kg` : null, openWeight, Boolean(day.weight)),
     )
     : null;
+
+  // ---- this week at a glance ---------------------------------------------------
+
+  const weekCard = (() => {
+    if (!isToday) return null;
+    const rows = [];
+    const row = (href, label, value, sub) => rows.push(h('a', { class: 'wk-row', href }, h('span', {}, label), h('b', {}, value), sub ? h('small', {}, sub) : null));
+    if (started) {
+      const w = weekSoFar(ctx, store.getDay, date, start);
+      row('#/habits', 'Kept so far', w.due ? `${w.kept} of ${w.due}` : '–', w.pct != null ? `${Math.round(w.pct * 100)}%` : null);
+      row('#/body', 'Training', `${w.training.kept} of ${w.training.due}`, 'sessions');
+      row('#/food', 'Water', w.waterAvgL != null ? `${w.waterAvgL.toFixed(1)} L` : '–', 'a day');
+      const p = pfeProgress(store.kv('pfeSteps', []), date, ctx.settings.defenseDate || null);
+      row('#/pfe', 'PFE', `${Math.round((w.pfeMinutes / 60) * 10) / 10} h`, p.pct != null ? `${Math.round(p.pct * 100)}% of steps` : 'add steps');
+    }
+    const spends = store.records('spend');
+    const m = monthMoney(spends, date.slice(0, 7), ctx.settings.income ?? null, date);
+    row('#/money', 'Spent', dh(spentBetween(spends, mondayOf(date), date)), m.left != null ? `${dh(m.left)} left this month` : 'this week');
+    return h('section', { class: 'wk-card', 'aria-label': 'This week' },
+      h('div', { class: 'wk-card-head' }, h('span', { class: 'eyebrow' }, 'This week'), h('a', { href: '#/review' }, 'Review')),
+      rows);
+  })();
 
   // ---- bad day --------------------------------------------------------------
 
@@ -454,7 +544,9 @@ export function today(root, route) {
         bar(eaten.targetKcal ? eaten.kcal / eaten.targetKcal : 0, 'var(--body)'),
         h('div', { class: 'cell-actions is-split' },
           h('span', { class: 'cell-hint' }, `Protein: ${Math.round(eaten.protein)} of ${eaten.targetProtein} g`),
-          h('a', { class: 'btn btn-small', href: isToday ? '#/food' : '#/food/plan' }, isToday ? 'Log food' : 'See the plan'),
+          isToday
+            ? h('button', { class: 'btn btn-small', type: 'button', onclick: () => openFoodSheet(date) }, 'Log food')
+            : h('a', { class: 'btn btn-small', href: '#/food/plan' }, 'See the plan'),
         ),
       ),
       proteinCell(date, day),
@@ -542,13 +634,15 @@ export function today(root, route) {
   root.append(
     headSlot,
     banners,
-    h('nav', { class: 'simple-actions', 'aria-label': 'Plan your day' },
-      h('a', { class: 'btn btn-solid', href: '#/week' }, icon('week', 18), 'Edit my schedule'),
-      h('a', { class: 'btn', href: '#/settings/reminders' }, 'Reminders'),
-      h('a', { class: 'btn btn-quiet', href: '#/guide' }, 'Help')),
-    h('p', { class: 'form-hint' }, 'Start here: follow your schedule, tick what you finish, then log your food and water.'),
+    ...(started ? [] : [
+      h('nav', { class: 'simple-actions', 'aria-label': 'Plan your day' },
+        h('a', { class: 'btn btn-solid', href: '#/week' }, icon('week', 18), 'Edit my schedule'),
+        h('a', { class: 'btn', href: '#/settings/reminders' }, 'Reminders'),
+        h('a', { class: 'btn btn-quiet', href: '#/guide' }, 'Help')),
+      h('p', { class: 'form-hint' }, 'Start here: follow your schedule, tick what you finish, then log your food and water.'),
+    ]),
     h('div', { class: 'today-grid' },
-      h('div', { class: 'col' }, nowSlot, quick, badDay, alerts, timelineSlot),
+      h('div', { class: 'col' }, nowSlot, quick, weekCard, badDay, alerts, timelineSlot),
       h('div', { class: 'col' }, trackersSec, (habitsSec || dontsSec) ? h('details', { class: 'simple-panel' }, h('summary', {}, 'Daily habits'), habitsSec, dontsSec) : null, journalSec ? h('details', { class: 'simple-panel' }, h('summary', {}, 'Evening journal'), journalSec) : null),
     ),
   );

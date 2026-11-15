@@ -82,6 +82,48 @@
   text-decoration: none;
 }
 .quick-item svg { color: var(--ink-2); }
+button.quick-item { font: inherit; font-size: 12px; font-weight: 650; cursor: pointer; }
+.quick-item small { font-size: 11px; font-weight: 500; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.quick-item.is-on { background: var(--accent); color: var(--on-accent); }
+.quick-item.is-on svg, .quick-item.is-on small { color: var(--on-accent); }
+.quick-item:active { transform: translateY(1px); }
+
+/* ---- this week card ---- */
+
+.wk-card { margin-top: 12px; padding: 16px 18px 6px; border-radius: 20px; background: var(--surface); }
+.wk-card-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px; }
+.wk-card-head a { font-size: 13px; font-weight: 600; color: var(--ink); text-underline-offset: 3px; }
+.wk-row {
+  display: grid; grid-template-columns: 1fr auto; column-gap: 12px; align-items: baseline;
+  padding: 10px 0; border-top: 1px solid var(--line); color: var(--ink); text-decoration: none;
+}
+.wk-card-head + .wk-row { border-top: 0; }
+.wk-row > span { font-size: 14px; color: var(--ink-2); }
+.wk-row b { font-size: 16px; font-weight: 690; font-variant-numeric: tabular-nums; text-align: right; }
+.wk-row small { grid-column: 2; text-align: right; font-size: 12px; color: var(--ink-2); }
+
+/* ---- money and PFE ---- */
+
+.money-hero { display: grid; gap: 10px; padding: 20px; border-radius: 24px; background: var(--primary); color: #F5F5F5; }
+.money-hero .eyebrow { color: rgba(245,245,245,.7); }
+.money-hero .bar { background: #686A7A; }
+.money-left { font-size: 40px; font-weight: 700; letter-spacing: -.04em; line-height: 1; font-variant-numeric: tabular-nums; }
+.money-sub { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 12px; font-size: 13px; color: rgba(245,245,245,.75); }
+.money-sub strong { color: #F5F5F5; font-weight: 650; }
+.money-hero .btn-solid { margin-top: 4px; }
+.money-amount { display: flex; align-items: baseline; gap: 10px; margin-bottom: 14px; }
+.money-amount span { font-size: 20px; font-weight: 650; color: var(--ink-2); }
+.input-big { font-size: 34px; font-weight: 700; height: 64px; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+.money-cats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.money-cat { display: grid; gap: 8px; padding: 14px; border: 0; border-radius: 16px; background: var(--surface); color: var(--ink); font: inherit; text-align: left; cursor: pointer; }
+.money-cat-top { display: grid; gap: 2px; font-size: 13px; color: var(--ink-2); }
+.money-cat-top b { font-size: 18px; font-weight: 690; color: var(--ink); font-variant-numeric: tabular-nums; }
+.pfe-next { padding-top: 10px; border-top: 1px solid #686A7A; }
+.pfe-next p { margin: 4px 0 2px; font-size: 17px; font-weight: 650; }
+.pfe-next small { font-size: 13px; color: rgba(245,245,245,.75); }
+.pfe-late { margin: 0; font-size: 13px; font-weight: 600; color: var(--accent); }
+.pfe-step { border: 0; background: none; padding: 0; font: inherit; color: inherit; text-align: left; cursor: pointer; }
+.blk-meta.is-late { color: var(--danger); font-weight: 600; }
 .cell-actions.is-split { align-items: center; justify-content: space-between; }
 .form-hint.is-tip { margin: 4px 0 6px; padding: 10px 12px; border-left: 3px solid var(--mind); background: var(--surface); color: var(--ink); }
 .form-hint.is-tip a { font-weight: 600; text-underline-offset: 3px; }

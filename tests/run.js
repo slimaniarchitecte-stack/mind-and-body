@@ -13,6 +13,7 @@ import './stats.test.js';
 import './backup.test.js';
 import './ics.test.js';
 import './pwa.test.js';
+import './money.test.js';
 
 const out = await run();
 

@@ -10,6 +10,8 @@ export const NAV = [
   { id: 'week', label: 'Schedule', icon: 'week', primary: true },
   { id: 'food', label: 'Food', icon: 'food', primary: true },
   { id: 'body', label: 'Training', icon: 'body', primary: true },
+  { id: 'pfe', label: 'PFE', icon: 'pfe', hint: 'Steps, jury date, hours this week' },
+  { id: 'money', label: 'Money', icon: 'money', hint: 'Income, spending, what is left' },
   { id: 'guide', label: 'How it works', icon: 'help', hint: 'The app explained in two minutes' },
   { id: 'learn', label: 'Learn', icon: 'learn', hint: 'Dynamo, Navisworks, AI lab, sessions' },
   { id: 'create', label: 'Create', icon: 'create', hint: 'Sketches, studies, design challenges, ideas' },

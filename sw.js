@@ -59,6 +59,8 @@ const FILES = [
   'js/core/strength.js',
   'js/core/learn.js',
   'js/core/food.js',
+  'js/core/money.js',
+  'js/core/pfe.js',
   'js/core/stats.js',
   'js/core/backup.js',
   'js/core/ics.js',
@@ -81,6 +83,8 @@ const FILES = [
   'js/screens/review.js',
   'js/screens/settings.js',
   'js/screens/guide.js',
+  'js/screens/money.js',
+  'js/screens/pfe.js',
 ];
 
 self.addEventListener('install', (event) => {

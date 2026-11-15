@@ -17,6 +17,8 @@ import { review } from './screens/review.js';
 import { applyTheme } from './theme.js';
 import { settings } from './screens/settings.js';
 import { guide } from './screens/guide.js';
+import { pfe } from './screens/pfe.js';
+import { money } from './screens/money.js';
 import { runUnlockCheck } from './unlockFlow.js';
 import { cleanUnusedPhotos } from './backupFlow.js';
 import { initPWA } from './pwa.js';
@@ -47,6 +49,8 @@ async function boot() {
   register('review', review);
   register('settings', settings);
   register('guide', guide);
+  register('pfe', pfe);
+  register('money', money);
 
   // Is a new stage due today? Decide before the first screen is drawn.
   await runUnlockCheck().catch((err) => console.warn('Unlock check failed', err));

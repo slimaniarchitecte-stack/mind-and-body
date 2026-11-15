@@ -19,6 +19,8 @@ import { appDate, appMinutes, addDays, dow, mondayOf, fmtDate, DAY_SHORT } from 
 import { blocksForDate } from '../core/schedule.js';
 import { MEALS, totals, planEntries, addEntries, mealAt, planFor, recentFood, monthSpend, fmtQty } from '../core/food.js';
 import { waterCell, proteinCell, targetsCard, adjustmentCard, foodList, changeFoodLog, foodSummary } from './shared.js';
+import { catOf } from '../core/money.js';
+import { openSpendSheet } from './money.js';
 
 const TABS = [{ id: 'today', label: 'Today' }, { id: 'plan', label: 'My plan' }, { id: 'shop', label: 'Shop' }];
 const num = (v) => Math.round(v).toLocaleString('en-US');
@@ -53,7 +55,7 @@ export function food(root, route) {
 const mealTitle = (id) => MEALS.find((m) => m.id === id)?.title ?? id;
 
 // Log all the foods of one planned meal, in one tap.
-async function logPlannedMeal(today, plan, mealId) {
+export async function logPlannedMeal(today, plan, mealId) {
   await changeFoodLog(today, (log) => addEntries(log, planEntries(plan, mealId), () => store.uid('f')));
   toast(`${mealTitle(mealId)} logged as planned.`);
 }
@@ -166,7 +168,7 @@ function todayView(root, { ctx, today, data, todayPlan }) {
 
 // ---- log sheet: pick foods and portions -------------------------------------------------
 
-function openFoodSheet(today, meal) {
+export function openFoodSheet(today, meal) {
   const foods = foodList();
   const state = { meal: meal ?? mealAt(appMinutes(clock.now(), 0) % 1440), qty: {}, query: '' };
   const sumLine = h('span', { class: 'sheet-sum' });
@@ -367,19 +369,11 @@ function shopView(root, { today, data }) {
   const month = today.slice(0, 7);
   const monthName = fmtDate(`${month}-01`, 'dayMonth').split(' ')[1];
   const budget = store.kv('foodBudget', {}).monthly ?? null;
-  const spends = store.records('spend');
+  const spends = store.records('spend').filter((r) => catOf(r) === 'food');
   const spent = monthSpend(spends, month);
   const dh = (v) => `${(Math.round(v * 100) / 100).toLocaleString('en-US')} DH`;
 
-  const logSpend = (existing) => recordSheet({
-    type: 'spend', eyebrow: 'Food money', title: existing ? 'Edit' : 'I bought food', existing, defaults: { date: today },
-    fields: [
-      { key: 'amount', label: 'Amount, DH', kind: 'number', min: 0, max: 100000, step: 0.5, required: true },
-      { key: 'what', label: 'What', kind: 'text', placeholder: 'For example: eggs, milk, oats' },
-      { key: 'date', label: 'Date', kind: 'date', max: today, required: true },
-    ],
-    savedText: 'Saved.',
-  });
+  const logSpend = (existing) => openSpendSheet({ existing, cat: 'food' });
 
   const budgetIn = h('input', {
     class: 'input', type: 'number', inputmode: 'decimal', min: 0, max: 100000, step: 10, placeholder: 'DH per month', value: budget ?? '',
