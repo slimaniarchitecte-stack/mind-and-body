@@ -61,6 +61,7 @@ const FILES = [
   'js/core/food.js',
   'js/core/money.js',
   'js/core/pfe.js',
+  'js/core/replan.js',
   'js/core/stats.js',
   'js/core/backup.js',
   'js/core/ics.js',

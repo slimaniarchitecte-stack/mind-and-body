@@ -88,6 +88,27 @@ button.quick-item { font: inherit; font-size: 12px; font-weight: 650; cursor: po
 .quick-item.is-on svg, .quick-item.is-on small { color: var(--on-accent); }
 .quick-item:active { transform: translateY(1px); }
 
+/* ---- replan my day ---- */
+
+.replan-btn { margin-top: 8px; border-color: var(--primary); font-weight: 650; }
+.replan-opts { display: grid; gap: 8px; }
+.replan-opt {
+  display: grid; gap: 3px; padding: 14px 16px; border: 0; border-radius: 16px;
+  background: var(--surface); color: var(--ink); font: inherit; text-align: left; cursor: pointer;
+}
+.replan-opt b { font-size: 16px; font-weight: 650; }
+.replan-opt small { font-size: 13px; color: var(--ink-2); }
+.replan-opt:active { transform: translateY(1px); }
+.replan-opts + .btn-text { margin-top: 12px; }
+.replan-chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 12px; }
+.replan-chips .btn { flex: 1 1 auto; }
+.sheet-eyebrow-line { margin: 0 0 10px; font-size: 13px; font-weight: 650; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); }
+.replan-lines { display: grid; border-top: 1px solid var(--line); }
+.replan-line { display: flex; justify-content: space-between; gap: 12px; padding: 11px 0; border-bottom: 1px solid var(--line); font-size: 15px; }
+.replan-line b { font-weight: 650; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.replan-line.is-skip b { color: var(--danger); }
+.replan-line.is-quiet b { color: var(--ink-2); font-weight: 500; }
+
 /* ---- this week card ---- */
 
 .wk-card { margin-top: 12px; padding: 16px 18px 6px; border-radius: 20px; background: var(--surface); }

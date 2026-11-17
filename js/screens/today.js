@@ -7,7 +7,8 @@ import { pageHead, section, ring, tick, seg, bar, note, chips, pct, timeInput } 
 import { store } from '../store.js';
 import * as clock from '../clock.js';
 import { refresh } from '../router.js';
-import { setStatus, moveBlock, unmoveBlock } from '../actions.js';
+import { setStatus, moveBlock, unmoveBlock, applyReplan, resetReplan, hasReplan } from '../actions.js';
+import { replanDay, pullForward, restOfDay } from '../core/replan.js';
 import { forceStage, FORCE_WARNING } from '../unlockFlow.js';
 import {
   appDate, appMinutes, addDays, diffDays, fmtDate, fmtHM, fmtDur, programWeek, isISO, weekDates, mondayOf, normalizeTime, DAY_SHORT, dow,
@@ -304,6 +305,135 @@ export function today(root, route) {
       qBtn('money', 'Spent', null, () => openSpendSheet()),
       qBtn('scale', 'Weight', day.weight ? `${day.weight} kg` : null, openWeight, Boolean(day.weight)),
     )
+    : null;
+
+  // ---- replan my day: the day changed, fix the rest of it in two taps ---------------
+
+  function openReplanSheet() {
+    let sheet = null;
+    const now = minutesNow();
+    const rawStatus = (key) => store.day(date).items[key]?.s ?? null;
+    const opts = { now, statusOf: rawStatus };
+
+    const option = (title, sub, onclick) => h('button', { class: 'replan-opt', type: 'button', onclick }, h('b', {}, title), h('small', {}, sub));
+    const back = () => h('button', { class: 'btn btn-quiet', type: 'button', onclick: showMenu }, 'Back');
+
+    function showPreview(title, { moved = [], skipped = [], kept = [], reason = 'Plans changed', empty: emptyText }) {
+      const line = (name, from, to, tone) => h('div', { class: cx('replan-line', tone && `is-${tone}`) }, h('span', {}, name), h('b', {}, from, to ? [' → ', to] : null));
+      const lines = [
+        ...moved.map(({ block, start }) => line(block.title, fmtHM(block.start), fmtHM(start))),
+        ...skipped.map((b) => line(b.title, fmtHM(b.start), 'skipped', 'skip')),
+        ...kept.map((b) => line(b.title, fmtHM(b.start), 'no room, stays', 'quiet')),
+      ];
+      sheet.setBody(
+        h('p', { class: 'sheet-eyebrow-line' }, title),
+        lines.length ? h('div', { class: 'replan-lines' }, lines) : h('p', { class: 'sheet-text' }, emptyText ?? 'Nothing needs to change. Your plan still works.'),
+        skipped.length ? h('p', { class: 'form-hint' }, `Skipped blocks get the reason "${reason}". Missing once is neutral.${skipped.some((b) => b.min) ? ' If you still find 15 minutes, open the block and mark the minimum: it counts as kept.' : ''}`) : null,
+        moved.length ? h('p', { class: 'form-hint' }, 'New times are for today only. Your usual week stays the same.') : null,
+      );
+      sheet.setFooter(
+        back(),
+        moved.length || skipped.length
+          ? h('button', {
+            class: 'btn btn-solid btn-grow', type: 'button',
+            onclick: async () => {
+              const undo = await applyReplan(date, { moved, skipped, reason });
+              sheet.close();
+              toast(`Day replanned: ${moved.length} moved${skipped.length ? `, ${skipped.length} skipped` : ''}.`, { ms: 6000, action: { label: 'Undo', run: undo } });
+            },
+          }, 'Apply')
+          : null,
+      );
+    }
+
+    const fromRule = (title, r) => showPreview(title, {
+      moved: r.moved,
+      skipped: [...r.missed, ...r.dropped.filter((b) => b.track)],
+      kept: r.dropped.filter((b) => !b.track),
+    });
+
+    function showLate() {
+      sheet.setBody(
+        h('p', { class: 'sheet-text' }, 'How late are you? What is in the way moves later, the rest keeps its time. Work, Muay Thai and your bedtime routine never move.'),
+        h('div', { class: 'replan-chips' }, [15, 30, 60, 90, 120].map((m) => h('button', {
+          class: 'btn', type: 'button',
+          onclick: () => fromRule(`Running ${fmtDur(m)} late`, replanDay(live, ctx.blocks, { ...opts, busyUntil: now + m, markMissed: false })),
+        }, `+${fmtDur(m)}`))),
+      );
+      sheet.setFooter(back());
+    }
+
+    function showBusy() {
+      const suggest = Math.ceil((now + 60) / 15) * 15;
+      const until = timeInput(fmtHM(suggest), { label: 'Busy until' });
+      const go = () => {
+        const v = normalizeTime(until.value);
+        if (!v) { toast('Type a time, for example 19:30.'); return; }
+        let end = Number(v.slice(0, 2)) * 60 + Number(v.slice(3));
+        if (end < dsh * 60) end += 1440;
+        if (end <= now) { toast('That time has already passed.'); return; }
+        fromRule(`Busy until ${v}`, replanDay(live, ctx.blocks, { ...opts, busyUntil: end }));
+      };
+      until.addEventListener('keydown', (e) => { if (e.key === 'Enter') go(); });
+      sheet.setBody(
+        h('p', { class: 'sheet-text' }, 'Work runs late, a meeting, the family, the road. Until when are you busy?'),
+        h('div', { class: 'replan-chips' }, [60, 120, 180].map((m) => h('button', {
+          class: 'btn', type: 'button', onclick: () => { until.value = fmtHM(Math.ceil((now + m) / 15) * 15); go(); },
+        }, `${fmtDur(m)} from now`))),
+        h('label', { class: 'field' }, h('span', { class: 'field-label' }, 'Or busy until'), until),
+      );
+      sheet.setFooter(back(), h('button', { class: 'btn btn-solid btn-grow', type: 'button', onclick: go }, 'See the new plan'));
+    }
+
+    function showFree() {
+      const r = pullForward(live, ctx.blocks, opts);
+      if (r.reason) {
+        showPreview('Free time now', {
+          empty: r.reason === 'nothing'
+            ? 'Nothing left to bring forward today. Enjoy the free time, or open Learn or Create.'
+            : `${r.block.title} (${fmtDur(r.block.end - r.block.start)}) does not fit before the next fixed thing. Keep it at ${fmtHM(r.block.start)}.`,
+        });
+        return;
+      }
+      showPreview('Free time now: do the next thing earlier', { moved: r.moved });
+    }
+
+    function showOff() {
+      const left = restOfDay(live, opts);
+      sheet.setBody(
+        h('p', { class: 'sheet-text' }, `Everything still open today (${left.length} ${left.length === 1 ? 'block' : 'blocks'}) is marked skipped. Tomorrow starts fresh.`),
+        h('div', { class: 'replan-chips' }, ['Sick', 'Exhausted', 'Family', 'Plans changed'].map((r) => h('button', {
+          class: 'btn', type: 'button', onclick: () => showPreview(`Day off: ${r.toLowerCase()}`, { skipped: left, reason: r }),
+        }, r))),
+        h('p', { class: 'form-hint' }, 'Only tired, not sick? "Bad day? Switch to minimums" keeps the day alive with small versions.'),
+      );
+      sheet.setFooter(back());
+    }
+
+    function showMenu() {
+      sheet.setBody(
+        h('div', { class: 'replan-opts' },
+          option("I'm running late", 'Push everything still open by 15 min to 2 h', showLate),
+          option('Something came up', 'Busy until a time: work, family, a meeting', showBusy),
+          option('I have free time now', 'Do the next thing earlier', showFree),
+          option('Day off', 'Sick or exhausted: skip what is left, no guilt', showOff),
+        ),
+        hasReplan(date)
+          ? h('button', {
+            class: 'btn-text', type: 'button',
+            onclick: async () => { await resetReplan(date); sheet.close(); toast('Today is back to the usual plan.'); },
+          }, 'Put today back to the usual plan')
+          : null,
+      );
+      sheet.setFooter();
+    }
+
+    sheet = openSheet({ eyebrow: `Now ${fmtHM(now)}`, title: 'Replan my day', body: [] });
+    showMenu();
+  }
+
+  const replanBtn = isToday && started
+    ? h('button', { class: 'btn btn-block replan-btn', type: 'button', onclick: openReplanSheet }, icon('shuffle', 18), 'My day changed: replan')
     : null;
 
   // ---- this week at a glance ---------------------------------------------------
@@ -642,7 +772,7 @@ export function today(root, route) {
       h('p', { class: 'form-hint' }, 'Start here: follow your schedule, tick what you finish, then log your food and water.'),
     ]),
     h('div', { class: 'today-grid' },
-      h('div', { class: 'col' }, nowSlot, quick, weekCard, badDay, alerts, timelineSlot),
+      h('div', { class: 'col' }, nowSlot, quick, replanBtn, weekCard, badDay, alerts, timelineSlot),
       h('div', { class: 'col' }, trackersSec, (habitsSec || dontsSec) ? h('details', { class: 'simple-panel' }, h('summary', {}, 'Daily habits'), habitsSec, dontsSec) : null, journalSec ? h('details', { class: 'simple-panel' }, h('summary', {}, 'Evening journal'), journalSec) : null),
     ),
   );
